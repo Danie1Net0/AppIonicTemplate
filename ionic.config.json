@@ -1,0 +1,7 @@
+{
+  "name": "NavigationLogin",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
