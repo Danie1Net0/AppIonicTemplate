@@ -5,7 +5,16 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "baseUrl": "src",
+    "paths": {
+      "@environments": ["environments"],
+      "@app": ["app"],
+      "@core": ["app/core"],
+      "@shared": ["app/shared"],
+      "@auth": ["app/auth"],
+      "@dashboard": ["app/dashboard"]
+    }
   },
   "files": [
     "src/test.ts",

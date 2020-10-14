@@ -24,3 +24,40 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.loading-wrapper.sc-ion-loading-md {
+  --spinner-color: #EC555A;
+  --width: 200px;
+  --height: 120px;
+
+  border-radius: 15px;
+  display: flex ;
+  flex-direction: column;
+
+  .loading-content {
+    font-weight: bold;
+    font-size: 16px;
+    color: #71727a;
+    margin: 20px 0 0 0 !important;
+  }
+}
+
+.display-flex {
+  display: flex;
+
+  input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .item-input.sc-ion-label-md-h, .item-input .sc-ion-label-md-h {
+    display: none;
+  }
+
+  .flex-input {
+    flex: 1;
+    width: 50px;
+    margin: 0 10px;
+  }
+
+}

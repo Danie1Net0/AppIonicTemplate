@@ -1,0 +1,37 @@
+<ion-slides>
+  <ion-slide>
+    <ion-text>
+      <p>Crie sua conta</p>
+
+      <ion-button (click)="setRegisterType('phone')" color="danger" expand="block" fill="outline" shape="round">
+        Com número de celular
+      </ion-button>
+
+      <ion-button class="ion-margin-top" (click)="setRegisterType('email')" color="danger" expand="block" fill="outline" shape="round">
+        Com endereço de e-mail
+      </ion-button>
+    </ion-text>
+  </ion-slide>
+
+  <ion-slide *ngFor="let field of field.fieldGroup; let last = last;">
+    <ion-text>
+      <h3>{{ field.templateOptions?.label }}</h3>
+
+      <formly-field [field]="field"></formly-field>
+
+      <ion-row class="ion-padding-top ion-justify-content-between">
+        <ion-button class="btn-icon" (click)="previous()" color="danger" shape="round">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </ion-button>
+
+        <ion-button (click)="next()" color="danger" shape="round" *ngIf="!last" [disabled]="!isValid(field)">
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+        </ion-button>
+
+        <ion-button type="submit" color="danger" shape="round" *ngIf="last">
+          Concluir
+        </ion-button>
+      </ion-row>
+    </ion-text>
+  </ion-slide>
+</ion-slides>

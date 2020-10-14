@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/auth/login">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Registre-se</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-horizontal">
+  <form (ngSubmit)="save()" [formGroup]="formGroup">
+    <formly-form [fields]="fields" [form]="formGroup" [model]="userRegister"></formly-form>
+  </form>
+</ion-content>

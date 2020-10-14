@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-horizontal">
+  <ion-row class="ion-align-items-center ion-justify-content-center">
+    <form (ngSubmit)="login()" [formGroup]="formGroup">
+      <formly-form [fields]="fields" [form]="formGroup" [model]="credentials"></formly-form>
+
+      <ion-button [disabled]="formGroup.invalid" class="ion-margin-vertical" color="danger" expand="block" type="submit">
+        Entrar
+      </ion-button>
+
+      <ion-button (click)="register()" color="danger" expand="block" fill="clear" type="button">
+        Não é um membro? Inscreva-se!
+      </ion-button>
+    </form>
+  </ion-row>
+</ion-content>

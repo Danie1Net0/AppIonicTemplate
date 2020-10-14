@@ -1,3 +1,39 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content">
+    <ion-menu side="start" contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>
+            <ion-text>Ionic App</ion-text>
+            <br>
+            <ion-text>
+              <small>Seja bem vindo!</small>
+            </ion-text>
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let page of appPages">
+            <ion-item [routerDirection]="'root'" [routerLink]="[page.url]">
+              <ion-icon slot="start" [name]="page.icon"></ion-icon>
+              <ion-label>
+                {{ page.title }}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-item (click)="logout()">
+            <ion-icon slot="start" name="log-out"></ion-icon>
+            <ion-label>
+              Logout
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>

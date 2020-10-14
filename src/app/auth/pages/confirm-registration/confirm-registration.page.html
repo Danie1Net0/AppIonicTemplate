@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/auth/login">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Registre-se</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-horizontal">
+  <ion-row class="ion-align-items-center ion-justify-content-center">
+    <ion-col size="12">
+      <ion-text class="ion-text-center">
+        <h3>Confirme seu cadastro</h3>
+
+        <p>Insira abaixo o código que enviamos por e-mail ou SMS</p>
+
+        <form [formGroup]="formGroup">
+          <formly-form [fields]="fields" [form]="formGroup" [model]="confirmRegistration"></formly-form>
+        </form>
+
+        <ion-row class="ion-justify-content-end ion-padding-vertical">
+          <a (click)="resendCode()">Reenviar Código</a>
+        </ion-row>
+
+        <ion-button [disabled]="isCodeInvalid()" class="ion-float-end" color="danger" shape="round" (click)="confirm()">
+          Confirmar
+        </ion-button>
+      </ion-text>
+    </ion-col>
+  </ion-row>
+</ion-content>
