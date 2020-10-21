@@ -8,8 +8,8 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { EmitValueService } from '@core/services/emit-value.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { Credentials } from '@auth/models/credentials';
-import { FORM_FIELDS } from '@auth/pages/login/config/form-fields-login';
 import { ConfirmRegistration } from '@auth/models/confirm-registration';
+import { FORM_FIELDS } from '@auth/pages/login/config/form-fields-login';
 
 @Component({
   selector: 'app-login',
@@ -42,6 +42,12 @@ export class LoginPage implements OnInit {
     this.formGroup = new FormGroup({});
     this.credentials = new Credentials('teste@teste.com', 'asdfasdf');
     this.fields = FORM_FIELDS;
+
+    this.fields[1].templateOptions.keyup = async (field: FormlyFieldConfig, event: any) => {
+      if (event.key === 'Enter' && this.formGroup.valid) {
+        await this.login();
+      }
+    };
   }
 
   public async login() {
@@ -60,13 +66,11 @@ export class LoginPage implements OnInit {
       }, async (error: any) => {
         await loading.dismiss();
 
-        if (error.error?.data.unconfirmed) {
+        if (error.error?.data?.unconfirmed) {
           const { email, phone } = LoginPage.getEmailAndPhone(this.credentials.login);
           const confirmRegistration = new ConfirmRegistration(email, phone);
 
-          return await this.emitValueService.emitValue('confirmRegistration', confirmRegistration, '/auth/confirm-registration', {
-            replaceUrl: true
-          });
+          return await this.emitValueService.emitValue('confirmRegistration', confirmRegistration, '/auth/confirm-registration');
         }
 
         const alert = await this.alertController.create({
@@ -76,12 +80,6 @@ export class LoginPage implements OnInit {
         });
         await alert.present();
       });
-  }
-
-  public async register() {
-    await this.router.navigateByUrl('/auth/register', {
-      replaceUrl: true
-    });
   }
 
 }

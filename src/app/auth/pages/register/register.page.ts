@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { LoadingController } from '@ionic/angular';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -25,7 +24,6 @@ export class RegisterPage implements OnInit {
   constructor(
     private emitValueService: EmitValueService,
     private loadingController: LoadingController,
-    private router: Router,
     private userRegisterService: UserRegisterService
   ) { }
 
@@ -42,15 +40,11 @@ export class RegisterPage implements OnInit {
     await loading.present();
 
     this.userRegisterService.register(this.userRegister)
-      .subscribe(async (user) => {
+      .subscribe(async (user: any) => {
         const confirmRegistration = new ConfirmRegistration(this.userRegister.email, this.userRegister.phone);
 
-        this.userRegister = new UserRegister();
-
         await loading.dismiss();
-        await this.emitValueService.emitValue('confirmRegistration', confirmRegistration, '/auth/confirm-registration', {
-          replaceUrl: true
-        });
+        await this.emitValueService.emitValue('confirmRegistration', confirmRegistration, '/auth/confirm-registration');
       });
   }
 

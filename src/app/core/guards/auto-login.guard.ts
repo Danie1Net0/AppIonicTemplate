@@ -1,22 +1,40 @@
 import { Injectable } from '@angular/core';
-import { CanLoad, Route, Router, UrlSegment } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateChild,
+  CanLoad,
+  Route,
+  Router,
+  RouterStateSnapshot,
+  UrlSegment
+} from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
 import { AuthenticationService } from '@core/services/authentication.service';
 
 @Injectable()
-export class AutoLoginGuard implements CanLoad {
+export class AutoLoginGuard implements CanLoad, CanActivate, CanActivateChild {
 
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
   ) { }
 
-  public canLoad(
-    route: Route,
-    segments: UrlSegment[]
-  ): Observable<boolean> {
+  public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    return this.verifyAuthentication();
+  }
+
+  public canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    return this.verifyAuthentication();
+  }
+
+  public canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
+    return this.verifyAuthentication();
+  }
+
+  private verifyAuthentication(): Observable<boolean> {
     return this.authenticationService.isAuthenticated
       .pipe(
         filter(value => value != null),
@@ -32,4 +50,5 @@ export class AutoLoginGuard implements CanLoad {
         })
       );
   }
+
 }

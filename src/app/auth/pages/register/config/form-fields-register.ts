@@ -1,7 +1,7 @@
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
 export const FORM_FIELDS: FormlyFieldConfig[] = [{
-  type: 'slide',
+  type: 'slides-register',
   validators: {
     validation: [{
       name: 'fieldMatch',
@@ -20,7 +20,10 @@ export const FORM_FIELDS: FormlyFieldConfig[] = [{
         type: 'input',
         templateOptions: {
           label: 'E-mail',
-          required: true
+          required: true,
+          keyup: (field, event) => {
+            this.next(field);
+          }
         },
         validators: {
           validation: ['email']

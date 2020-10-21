@@ -4,16 +4,16 @@ import { IonSlides } from '@ionic/angular';
 import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
-  selector: 'app-slides',
-  templateUrl: './slides.component.html',
-  styleUrls: ['./slides.component.scss'],
+  selector: 'app-slides-register',
+  templateUrl: './slides-register.component.html',
+  styleUrls: ['./slides-register.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SlidesComponent extends FieldType implements OnInit, AfterViewInit {
+export class SlidesRegisterComponent extends FieldType implements OnInit, AfterViewInit {
 
   @ViewChild(IonSlides) slides: IonSlides;
 
-  private registerType = 'email';
+  private registerType;
   private emailField: FormlyFieldConfig;
 
   constructor() {
@@ -21,7 +21,16 @@ export class SlidesComponent extends FieldType implements OnInit, AfterViewInit 
   }
 
   public ngOnInit(): void {
+    this.registerType = 'email';
     this.emailField = this.field.fieldGroup[0];
+
+    this.field.fieldGroup.forEach((field: FormlyFieldConfig) => {
+      field.fieldGroup[0].templateOptions.keyup = async (field1: FormlyFieldConfig, event: any) => {
+        if (event.key === 'Enter' && this.isValid(field1)) {
+          await this.next();
+        }
+      };
+    });
   }
 
   public async ngAfterViewInit() {
@@ -29,7 +38,7 @@ export class SlidesComponent extends FieldType implements OnInit, AfterViewInit 
   }
 
   public async setRegisterType(registerType: string) {
-    if (this.registerType !== 'phone' && registerType === 'phone') {
+    if (this.registerType !== 'phone' && registerType === 'phone' && Object.keys(this.field.fieldGroup).length === 8) {
       this.field.fieldGroup.splice(0, 1);
     } else if (this.registerType !== 'email' && registerType === 'email') {
       this.field.fieldGroup.unshift(this.emailField);

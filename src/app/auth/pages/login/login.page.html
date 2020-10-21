@@ -9,11 +9,15 @@
     <form (ngSubmit)="login()" [formGroup]="formGroup">
       <formly-form [fields]="fields" [form]="formGroup" [model]="credentials"></formly-form>
 
+      <ion-row class="ion-justify-content-end ion-padding-top">
+        <a routerLink="/auth/forgot-password">Recuperar Senha</a>
+      </ion-row>
+
       <ion-button [disabled]="formGroup.invalid" class="ion-margin-vertical" color="danger" expand="block" type="submit">
         Entrar
       </ion-button>
 
-      <ion-button (click)="register()" color="danger" expand="block" fill="clear" type="button">
+      <ion-button routerLink="/auth/register" color="danger" expand="block" fill="clear" type="button">
         Não é um membro? Inscreva-se!
       </ion-button>
     </form>

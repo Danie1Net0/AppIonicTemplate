@@ -8,6 +8,7 @@ import { FormlyIonicModule } from '@ngx-formly/ionic';
 
 import { ConfirmRegistrationPageRoutingModule } from '@auth/pages/confirm-registration/confirm-registration-routing.module';
 import { ConfirmRegistrationPage } from '@auth/pages/confirm-registration/confirm-registration.page';
+import { ConfirmRegistrationService } from '@auth/services/confirm-registration.service';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { ConfirmRegistrationPage } from '@auth/pages/confirm-registration/confir
     FormlyIonicModule,
     ConfirmRegistrationPageRoutingModule
   ],
-  declarations: [ConfirmRegistrationPage]
+  declarations: [ConfirmRegistrationPage],
+  providers: [ConfirmRegistrationService]
 })
 export class ConfirmRegistrationPageModule {}

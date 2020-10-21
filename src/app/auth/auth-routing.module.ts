@@ -3,10 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AutoLoginGuard } from '@core/guards/auto-login.guard';
 import { ConfirmRegistrationGuard } from '@auth/guards/confirm-registration.guard';
+import { ResetPasswordGuard } from '@auth/guards/reset-password.guard';
 
 const routes: Routes = [
   {
     path: '',
+    canActivateChild: [AutoLoginGuard],
     children: [
       {
         path: 'login',
@@ -22,6 +24,15 @@ const routes: Routes = [
         loadChildren: () => import('./pages/confirm-registration/confirm-registration.module')
           .then(module => module.ConfirmRegistrationPageModule),
         canLoad: [ConfirmRegistrationGuard]
+      },
+      {
+        path: 'forgot-password',
+        loadChildren: () => import('./pages/forgot-password/forgot-password.module').then(module => module.ForgotPasswordPageModule)
+      },
+      {
+        path: 'reset-password',
+        loadChildren: () => import('./pages/reset-password/reset-password.module').then(module => module.ResetPasswordPageModule),
+        canLoad: [ResetPasswordGuard]
       },
       {
         path: '',

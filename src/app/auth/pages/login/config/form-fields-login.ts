@@ -18,12 +18,7 @@ export const FORM_FIELDS: FormlyFieldConfig[] = [
       placeholder: 'Insira sua senha',
       required: true,
       minLength: 8,
-      type: 'password',
-      keyup: async (field: FormlyFieldConfig, event: any) => {
-        if (event.key === 'Enter' && this.formGroup.valid) {
-          await this.login();
-        }
-      }
+      type: 'password'
     }
   }
 ];
