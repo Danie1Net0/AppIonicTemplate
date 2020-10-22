@@ -58,6 +58,7 @@ export class ConfirmRegistrationPage implements OnInit {
     this.confirmRegistrationService.confirmRegistration(this.confirmRegistration)
       .subscribe(async (confirmation: any) => {
         await this.loading.dismiss();
+        await this.authenticationService.storageUser(confirmation.data.user);
         await this.authenticationService.storageToken(confirmation.data.token);
 
         this.authenticationService.isAuthenticated.next(true);

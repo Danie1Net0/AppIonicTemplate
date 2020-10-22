@@ -10,7 +10,9 @@ import { EmitValueService } from '@core/services/emit-value.service';
 import { FormValidationsService } from '@core/services/form-validations.service';
 import { HandleErrorService } from '@core/services/handle-error.service';
 import { AutoLoginGuard } from '@core/guards/auto-login.guard';
+import { AccessControlGuard } from '@core/guards/access-control.guard';
 import { AuthGuard } from '@core/guards/auth.guard';
+import { UserService } from '@core/services/user.service';
 
 @NgModule({
   declarations: [],
@@ -24,6 +26,8 @@ import { AuthGuard } from '@core/guards/auth.guard';
     EmitValueService,
     FormValidationsService,
     HandleErrorService,
+    UserService,
+    AccessControlGuard,
     AuthGuard,
     AutoLoginGuard
   ]

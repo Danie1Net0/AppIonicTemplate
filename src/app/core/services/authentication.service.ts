@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, from, Observable } from 'rxjs';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
 
 import { Plugins } from '@capacitor/core';
 
 import { Environment } from '@shared/decorators/environment.decorator';
 import { Credentials } from '@auth/models/credentials';
+import { User } from '@shared/models/user';
 
 const { Storage } = Plugins;
 const TOKEN_KEY = 'user-token';
+export const USER_KEY = 'user';
 
 @Injectable()
 export class AuthenticationService {
@@ -42,11 +44,10 @@ export class AuthenticationService {
 
     return this.httpClient.post(url, credentials)
       .pipe(
-        map((data: any) => data.token),
-        switchMap((token: string) => {
-          return from(this.storageToken(token));
-        }),
-        tap(_ => {
+        take(1),
+        tap(async (response: any) => {
+          await this.storageToken(response.data.token);
+          await this.storageUser(response.data.user);
           this.isAuthenticated.next(true);
         })
       );
@@ -59,18 +60,22 @@ export class AuthenticationService {
     });
   }
 
+  public storageUser(user: User): Promise<void> {
+    return Storage.set({
+      key: USER_KEY,
+      value: JSON.stringify(user)
+    });
+  }
+
   public logout(): Observable<any> {
     const url = `${ this.API_URL }/api/auth/logout`;
 
     return this.httpClient.post(url, {})
       .pipe(
         take(1),
-        tap(_ => {
+        tap(async _ => {
           this.isAuthenticated.next(false);
-
-          Storage.remove({
-            key: TOKEN_KEY
-          });
+          await Storage.clear();
         })
       );
   }
